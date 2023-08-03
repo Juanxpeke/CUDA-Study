@@ -40,19 +40,21 @@ Pitched memory is padded linear memory, that can be more efficient due to word a
 - How and when should I use pitched memory (https://stackoverflow.com/questions/16119943/how-and-when-should-i-use-pitched-pointer-with-the-cuda-api)
 - cudaMallocPitch and cudaMemcpy2D (https://stackoverflow.com/questions/35771430/cudamallocpitch-and-cudamemcpy2d)
 
-
 ## Shared Memory
 
 Shared memory is an space of memory shared by a group of threads belonging to the same CUDA block. It can be used to:
 
 - Apply shared logic between threads
 - Avoid reading from global memory
-- Avoid using local memory when thread data is too much
+- Avoid using local memory when thread data is too large
 
 ### Sources
 
 - Using shared memory in CUDA (https://developer.nvidia.com/blog/using-shared-memory-cuda-cc/)
+- CUDA C Programming Guida (https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#shared-memory)
 - CUDA shared memory webinar (https://developer.download.nvidia.com/CUDA/training/sharedmemoryusage_july2011.mp4)
+- CUDA GPU memory (https://www.ce.jhu.edu/dalrymple/classes/602/Class13.pdf)
+- Local Memory and Register Spilling (https://developer.download.nvidia.com/CUDA/training/register_spilling.pdf)
 - Why is padding for shared memory required? (https://stackoverflow.com/questions/15056842/when-is-padding-for-shared-memory-really-required)
 - Advanced CUDA webinar (https://developer.download.nvidia.com/CUDA/training/NVIDIA_GPU_Computing_Webinars_CUDA_Memory_Optimization.pdf)
 
