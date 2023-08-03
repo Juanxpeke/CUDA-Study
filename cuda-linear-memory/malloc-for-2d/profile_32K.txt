@@ -1,0 +1,28 @@
+==27720== NVPROF is profiling process 27720, command: .\malloc_for_2d.exe
+Max error for columns: 0
+Max error for rows: 0
+Max error for special matrix sum: 0
+==27720== Profiling application: .\malloc_for_2d.exe
+==27720== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   99.16%  26.7247s         1  26.7247s  26.7247s  26.7247s  matrixSumKernel(float*, double*, int, int)
+                    0.67%  181.05ms         1  181.05ms  181.05ms  181.05ms  [CUDA memcpy HtoD]
+                    0.10%  26.075ms         1  26.075ms  26.075ms  26.075ms  sumRowsKernel(float*, float*, int, int)
+                    0.07%  18.850ms         1  18.850ms  18.850ms  18.850ms  sumColumnsKernel(float*, float*, int, int)
+                    0.00%  16.576us         3  5.5250us  1.4080us  7.7120us  [CUDA memcpy DtoH]
+      API calls:   98.56%  26.7702s         3  8.92341s  19.290ms  26.7248s  cudaDeviceSynchronize
+                    0.76%  207.61ms         4  51.902ms  118.40us  206.94ms  cudaMemcpy
+                    0.57%  154.02ms         4  38.505ms  5.0000us  153.83ms  cudaMalloc
+                    0.08%  21.806ms         1  21.806ms  21.806ms  21.806ms  cuDevicePrimaryCtxRelease
+                    0.03%  8.1240ms         4  2.0310ms  3.0000us  7.9502ms  cudaFree
+                    0.00%  455.10us         1  455.10us  455.10us  455.10us  cuLibraryLoadData
+                    0.00%  122.20us         3  40.733us  31.200us  59.200us  cudaLaunchKernel
+                    0.00%  37.000us         1  37.000us  37.000us  37.000us  cuLibraryUnload
+                    0.00%  21.500us       114     188ns     100ns  1.9000us  cuDeviceGetAttribute
+                    0.00%  6.8000us         3  2.2660us     200ns  6.1000us  cuDeviceGetCount
+                    0.00%  2.5000us         1  2.5000us  2.5000us  2.5000us  cuModuleGetLoadingMode
+                    0.00%  2.0000us         2  1.0000us     200ns  1.8000us  cuDeviceGet
+                    0.00%     600ns         1     600ns     600ns     600ns  cuDeviceGetName
+                    0.00%     300ns         1     300ns     300ns     300ns  cuDeviceTotalMem
+                    0.00%     300ns         1     300ns     300ns     300ns  cuDeviceGetLuid
+                    0.00%     200ns         1     200ns     200ns     200ns  cuDeviceGetUuid

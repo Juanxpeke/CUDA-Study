@@ -1,0 +1,31 @@
+==39404== NVPROF is profiling process 39404, command: .\malloc_pitch.exe
+Width: 16387, True Width (Pitch / Bytes): 16512
+Max error for columns sum: 0
+Max error for rows sum: 0
+Max error for special matrix sum: 0
+==39404== Profiling application: .\malloc_pitch.exe
+==39404== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   99.16%  25.4061s         1  25.4061s  25.4061s  25.4061s  matrixSumKernel(float*, double*, __int64, int, int)
+                    0.68%  173.84ms         1  173.84ms  173.84ms  173.84ms  [CUDA memcpy HtoD]
+                    0.10%  24.806ms         1  24.806ms  24.806ms  24.806ms  sumRowsKernel(float*, float*, __int64, int, int)
+                    0.06%  16.600ms         1  16.600ms  16.600ms  16.600ms  sumColumnsKernel(float*, float*, __int64, int, int)
+                    0.00%  11.967us         3  3.9890us     352ns  6.0160us  [CUDA memcpy DtoH]
+      API calls:   98.54%  25.4485s         3  8.48282s  17.432ms  25.4061s  cudaDeviceSynchronize
+                    0.77%  199.48ms         1  199.48ms  199.48ms  199.48ms  cudaMemcpy2D
+                    0.57%  147.81ms         1  147.81ms  147.81ms  147.81ms  cudaMallocPitch
+                    0.08%  20.300ms         1  20.300ms  20.300ms  20.300ms  cuDevicePrimaryCtxRelease
+                    0.03%  8.7236ms         4  2.1809ms  2.9000us  8.5203ms  cudaFree
+                    0.00%  427.30us         1  427.30us  427.30us  427.30us  cuLibraryLoadData
+                    0.00%  172.20us         3  57.400us  5.2000us  161.50us  cudaMalloc
+                    0.00%  161.10us         3  53.700us  34.200us  86.300us  cudaMemcpy
+                    0.00%  115.20us         3  38.400us  23.600us  61.600us  cudaLaunchKernel
+                    0.00%  36.600us         1  36.600us  36.600us  36.600us  cuLibraryUnload
+                    0.00%  20.600us       114     180ns     100ns  1.8000us  cuDeviceGetAttribute
+                    0.00%  4.6000us         3  1.5330us     200ns  4.0000us  cuDeviceGetCount
+                    0.00%  2.9000us         1  2.9000us  2.9000us  2.9000us  cuModuleGetLoadingMode
+                    0.00%  1.9000us         2     950ns     200ns  1.7000us  cuDeviceGet
+                    0.00%     700ns         1     700ns     700ns     700ns  cuDeviceGetName
+                    0.00%     300ns         1     300ns     300ns     300ns  cuDeviceTotalMem
+                    0.00%     300ns         1     300ns     300ns     300ns  cuDeviceGetLuid
+                    0.00%     200ns         1     200ns     200ns     200ns  cuDeviceGetUuid

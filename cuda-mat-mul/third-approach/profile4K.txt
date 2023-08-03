@@ -1,0 +1,24 @@
+==6132== NVPROF is profiling process 6132, command: .\mat_mul_cuda.exe
+Max error: 0
+==6132== Profiling application: .\mat_mul_cuda.exe
+==6132== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   99.14%  4.81557s         1  4.81557s  4.81557s  4.81557s  matMul(int, float*, float*, float*)
+                    0.45%  21.891ms         2  10.946ms  10.553ms  11.338ms  [CUDA memcpy HtoD]
+                    0.41%  19.687ms         1  19.687ms  19.687ms  19.687ms  [CUDA memcpy DtoH]
+      API calls:   95.17%  4.81582s         1  4.81582s  4.81582s  4.81582s  cudaDeviceSynchronize
+                    3.47%  175.45ms         3  58.482ms  143.30us  175.16ms  cudaMalloc
+                    0.93%  47.271ms         3  15.757ms  11.493ms  20.117ms  cudaMemcpy
+                    0.41%  20.637ms         1  20.637ms  20.637ms  20.637ms  cuDevicePrimaryCtxRelease
+                    0.01%  630.00us         3  210.00us  180.20us  234.10us  cudaFree
+                    0.01%  384.50us         1  384.50us  384.50us  384.50us  cuLibraryLoadData
+                    0.00%  66.000us         1  66.000us  66.000us  66.000us  cudaLaunchKernel
+                    0.00%  30.200us         1  30.200us  30.200us  30.200us  cuLibraryUnload
+                    0.00%  20.300us       114     178ns     100ns  1.8000us  cuDeviceGetAttribute
+                    0.00%  6.1000us         2  3.0500us     300ns  5.8000us  cuDeviceGet
+                    0.00%  5.4000us         3  1.8000us     200ns  4.7000us  cuDeviceGetCount
+                    0.00%  2.7000us         1  2.7000us  2.7000us  2.7000us  cuModuleGetLoadingMode
+                    0.00%     600ns         1     600ns     600ns     600ns  cuDeviceGetName
+                    0.00%     400ns         1     400ns     400ns     400ns  cuDeviceGetLuid
+                    0.00%     300ns         1     300ns     300ns     300ns  cuDeviceTotalMem
+                    0.00%     100ns         1     100ns     100ns     100ns  cuDeviceGetUuid
