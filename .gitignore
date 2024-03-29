@@ -1,2 +1,11 @@
-/cuda-opengl/build
+# Executable files
+*.exe
+
+# Object files
+*.obj
+
+# Builds
+*/build
+
+# Visual Studio configuration
 .vscode

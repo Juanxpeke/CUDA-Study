@@ -1,5 +1,7 @@
 #include <iostream>
-#include <math.h>
+#include <algorithm>
+#include <cmath>
+#include "../mat_mul_defines.h"
 
 void matMul(int N, float* A, float* B, float* C)
 {
@@ -11,41 +13,55 @@ void matMul(int N, float* A, float* B, float* C)
       C[i * N + j] = 0.0f;
       for (k = 0; k < N; k++)
       {
-        // C(i, j) = sum(over k) A(i, k) * B(k, j)
         C[i * N + j] += A[i * N + k] * B[k * N + j];
       }
     }
   }
 }
 
-int main(void)
+int main(int argc, char* argv[])
 {
-  // Matrices of 1K X 1K elements
-  int N = 1 << 10;
+  int N;
+  if (argc == 2)
+  {
+    N = std::atoi(argv[1]);
+  }
+  else
+  {
+    N = 1024;
+  }
+
+  std::cout << "Running multiplication with N = " << N << std::endl;
 
   float* A = new float[N * N];
   float* B = new float[N * N];
   float* C = new float[N * N];
 
-  // Initialize A and B matrices on the host
+  // Initialize A and B matrices on the host (CPU)
   for (int i = 0; i < N * N; i++)
   {
-    A[i] = 1.0f;
-    B[i] = 2.0f;
+    A[i] = A_VALUES;
+    B[i] = B_VALUES;
   }
 
-  // Run kernel on 1M elements on the CPU
+  // Run function on N * N elements on the CPU
   matMul(N, A, B, C);
 
-  // Check for errors (all values should be 2048.0f)
   float maxError = 0.0f;
 
   for (int i = 0; i < N * N; i++)
   {
-    maxError = fmax(maxError, fabs(C[i] - 2048.0f));
+    maxError = std::max(maxError, std::fabs(C[i] - C_VALUES(N)));
   }
 
-  std::cout << "Max error: " << maxError << std::endl;
+  if (maxError > EPSILON)
+  {
+    std::cout << "Error in multiplication, error value is " << maxError << std::endl;
+  }
+  else
+  {
+    std::cout << "Multiplication completed successfully" << std::endl;
+  }
 
   // Free memory
   delete [] A;
