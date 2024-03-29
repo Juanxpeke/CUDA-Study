@@ -1,5 +1,9 @@
-# Executable files
+# Binary files
 *.exe
+*.lib
+
+# Export files
+*.exp
 
 # Object files
 *.obj

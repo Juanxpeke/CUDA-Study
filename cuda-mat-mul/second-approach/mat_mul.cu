@@ -1,5 +1,7 @@
 #include <iostream>
-#include <math.h>
+#include <algorithm>
+#include <cmath>
+#include "../mat_mul_defines.h"
 
 __global__ 
 void matMul(const int N, float* A, float* B, float* C)
