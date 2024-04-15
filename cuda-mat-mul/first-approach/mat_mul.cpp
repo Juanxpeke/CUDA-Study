@@ -47,6 +47,7 @@ int main(int argc, char* argv[])
   // Run function on N * N elements on the CPU
   matMul(N, A, B, C);
 
+  // Check for errors
   float maxError = 0.0f;
 
   for (int i = 0; i < N * N; i++)

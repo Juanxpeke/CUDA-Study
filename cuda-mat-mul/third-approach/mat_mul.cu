@@ -26,7 +26,7 @@ void matMul(const int N, float* A, float* B, float* C)
 int main(void)
 {
   // Matrices of 16K X 16K elements
-  int N = 1 << 14;
+  int N = 1 << 8;
 
   float* A = new float[N * N];
   float* B = new float[N * N];

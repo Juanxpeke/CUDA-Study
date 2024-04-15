@@ -23,10 +23,19 @@ void matMul(const int N, float* A, float* B, float* C)
 }
 
 
-int main(void)
+int main(int argc, char* argv[])
 {
-  // Matrices of 16K X 16K elements
-  int N = 1 << 14;
+  int N;
+  if (argc == 2)
+  {
+    N = std::atoi(argv[1]);
+  }
+  else
+  {
+    N = 1024;
+  }
+
+  std::cout << "Running multiplication with N = " << N << std::endl;
 
   float* A = new float[N * N];
   float* B = new float[N * N];
@@ -35,8 +44,8 @@ int main(void)
   // Initialize A and B matrices on the host
   for (int i = 0; i < N * N; i++)
   {
-    A[i] = 1.0f;
-    B[i] = 2.0f;
+    A[i] = A_VALUES;
+    B[i] = B_VALUES;
   }
 
 	// Allocate device memory for matrices A, B, and C
@@ -59,7 +68,7 @@ int main(void)
 	dim3 blockDim(blockSize, blockSize);
 	dim3 gridDim(numBlocks, numBlocks);
 
-  // Run kernel on 1M elements on the GPU
+  // Run kernel on N * N elements on the GPU
 	matMul<<<gridDim, blockDim>>>(N, dA, dB, dC);
 
 	// Wait for GPU to finish before accessing on host
@@ -73,17 +82,24 @@ int main(void)
 	cudaFree(dB);
 	cudaFree(dC);
 
-  // Check for errors (all values should be 32768.0f)
+  // Check for errors
   float maxError = 0.0f;
 
   for (int i = 0; i < N * N; i++)
   {
-    maxError = fmax(maxError, fabs(C[i] - 32768.0f));
+    maxError = std::max(maxError, std::fabs(C[i] - C_VALUES(N)));
   }
 
-  std::cout << "Max error: " << maxError << std::endl;
+  if (maxError > EPSILON)
+  {
+    std::cout << "Error in multiplication, error value is " << maxError << std::endl;
+  }
+  else
+  {
+    std::cout << "Multiplication completed successfully" << std::endl;
+  }
 
-  // Free memory
+  // Free host memory
   delete [] A;
   delete [] B;
   delete [] C;
