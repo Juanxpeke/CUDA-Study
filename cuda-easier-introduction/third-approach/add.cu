@@ -20,7 +20,7 @@ int main(void)
   // Arrays of 16M elements
   int N = 1 << 24;
 
-  // Allocate Unified Memory -- accessible from CPU or GPU (https://developer.nvidia.com/blog/unified-memory-in-cuda-6/)
+  // Allocate Unified Memory, accessible from CPU or GPU (https://developer.nvidia.com/blog/unified-memory-in-cuda-6/)
   float *x, *y;
   cudaMallocManaged(&x, N * sizeof(float));
   cudaMallocManaged(&y, N * sizeof(float));
@@ -32,7 +32,7 @@ int main(void)
     y[i] = 2.0f;
   }
 
-  // Run kernel on 16M elements on the GPU, this function launches one GPU thread to run add
+  // Run kernel on the GPU
   add<<<1, 256>>>(N, x, y);
 
   // Wait for GPU to finish before accessing on host

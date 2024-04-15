@@ -20,7 +20,7 @@ int main(void)
   // Arrays of 16M elements
   int N = 1 << 24;
 
-  // Allocate Unified Memory -- accessible from CPU or GPU (https://developer.nvidia.com/blog/unified-memory-in-cuda-6/)
+  // Allocate Unified Memory, accessible from CPU or GPU (https://developer.nvidia.com/blog/unified-memory-in-cuda-6/)
   float *x, *y;
   cudaMallocManaged(&x, N * sizeof(float));
   cudaMallocManaged(&y, N * sizeof(float));
