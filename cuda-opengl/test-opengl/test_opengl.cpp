@@ -1,14 +1,15 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <cmath>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 // Vertices coordinates
 GLfloat vertices[] = {
-  -0.5f, -0.5f * float(sqrt(3)) / 3    , 0.0f, // Lower left corner
-   0.5f, -0.5f * float(sqrt(3)) / 3    , 0.0f, // Lower right corner
-   0.0f,  0.5f * float(sqrt(3)) * 2 / 3, 0.0f  // Upper corner
+  -0.5f, -0.5f * float(std::sqrt(3)) / 3    , 0.0f, // Lower left corner
+   0.5f, -0.5f * float(std::sqrt(3)) / 3    , 0.0f, // Lower right corner
+   0.0f,  0.5f * float(std::sqrt(3)) * 2 / 3, 0.0f  // Upper corner
 };
 
 std::string getFileContent(const char* filename)
@@ -65,8 +66,23 @@ int main()
   }
 
   // Shaders
-  std::string vertexShaderCode = getFileContent("G:/Assets/Shaders/basic.vert");
-	std::string fragmentShaderCode = getFileContent("G:/Assets/Shaders/basic.frag");
+  std::string vertexShaderCode = R"(
+  #version 330 core
+  in vec3 position;
+
+  void main() {
+      gl_Position = vec4(position, 1.0f);
+  }
+  )";
+  
+  std::string fragmentShaderCode = R"(
+  #version 330 core
+  out vec4 outColor;
+
+  void main() {
+      outColor = vec4(0.6f, 0.3f, 0.0f, 1.0f);
+  }
+  )";
 
   const char* vertexShaderSource = vertexShaderCode.c_str();
 	const char* fragmentShaderSource = fragmentShaderCode.c_str();

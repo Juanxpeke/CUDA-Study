@@ -110,73 +110,88 @@ int main()
   }
 
   // Shaders
-  std::string vertexShaderCode = getFileContent("G:/Assets/Shaders/basic.vert");
-	std::string fragmentShaderCode = getFileContent("G:/Assets/Shaders/basic.frag");
+  std::string vertexShaderCode = R"(
+  #version 330 core
+  in vec3 position;
+
+  void main() {
+      gl_Position = vec4(position, 1.0f);
+  }
+  )";
+  
+  std::string fragmentShaderCode = R"(
+  #version 330 core
+  out vec4 outColor;
+
+  void main() {
+      outColor = vec4(0.6f, 0.3f, 0.0f, 1.0f);
+  }
+  )";
 
   const char* vertexShaderSource = vertexShaderCode.c_str();
-	const char* fragmentShaderSource = fragmentShaderCode.c_str();
+  const char* fragmentShaderSource = fragmentShaderCode.c_str();
 
-	// Create Vertex Shader Object and get its reference
-	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	// Attach Vertex Shader source to the Vertex Shader Object
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	// Compile the Vertex Shader into machine code
-	glCompileShader(vertexShader);
+  // Create Vertex Shader Object and get its reference
+  GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+  // Attach Vertex Shader source to the Vertex Shader Object
+  glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+  // Compile the Vertex Shader into machine code
+  glCompileShader(vertexShader);
 
-	// Create Fragment Shader Object and get its reference
-	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	// Attach Fragment Shader source to the Vertex Shader Object
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	// Compile the Fragment Shader into machine code
-	glCompileShader(fragmentShader);
+  // Create Fragment Shader Object and get its reference
+  GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+  // Attach Fragment Shader source to the Vertex Shader Object
+  glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+  // Compile the Fragment Shader into machine code
+  glCompileShader(fragmentShader);
 
-	// Create Shader Program Object and get its reference
-	GLuint shaderProgram = glCreateProgram();
-	// Attach the Vertex and Fragment Shaders to the Shader Program
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	// Wrap-up / link all the shaders together into the Shader Program
-	glLinkProgram(shaderProgram);
+  // Create Shader Program Object and get its reference
+  GLuint shaderProgram = glCreateProgram();
+  // Attach the Vertex and Fragment Shaders to the Shader Program
+  glAttachShader(shaderProgram, vertexShader);
+  glAttachShader(shaderProgram, fragmentShader);
+  // Wrap-up / link all the shaders together into the Shader Program
+  glLinkProgram(shaderProgram);
 
-	// Delete the now useless Vertex and Fragment Shader Objects
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
+  // Delete the now useless Vertex and Fragment Shader Objects
+  glDeleteShader(vertexShader);
+  glDeleteShader(fragmentShader);
 
   // Use the shader program
   glUseProgram(shaderProgram);
 
   // Create reference containers for the Vertex Array Object and the Vertex Buffer Object
-	GLuint VAO, VBO;
+  GLuint VAO, VBO;
 
-	// Generate the VAO and VBO with only 1 object each
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
+  // Generate the VAO and VBO with only 1 object each
+  glGenVertexArrays(1, &VAO);
+  glGenBuffers(1, &VBO);
 
-	// Make the VAO the current Vertex Array Object by binding it
-	glBindVertexArray(VAO);
+  // Make the VAO the current Vertex Array Object by binding it
+  glBindVertexArray(VAO);
 
-	// Bind the VBO specifying it's a GL_ARRAY_BUFFER
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	// Introduce the vertices into the VBO
-	glBufferData(GL_ARRAY_BUFFER, meshWidth * 3 * sizeof(float), nullptr, GL_DYNAMIC_DRAW);
+  // Bind the VBO specifying it's a GL_ARRAY_BUFFER
+  glBindBuffer(GL_ARRAY_BUFFER, VBO);
+  // Introduce the vertices into the VBO
+  glBufferData(GL_ARRAY_BUFFER, meshWidth * 3 * sizeof(float), nullptr, GL_DYNAMIC_DRAW);
 
-	// Configure the Vertex Attribute so that OpenGL knows how to read the VBO
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	// Enable the Vertex Attribute so that OpenGL knows to use it
-	glEnableVertexAttribArray(0);
+  // Configure the Vertex Attribute so that OpenGL knows how to read the VBO
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+  // Enable the Vertex Attribute so that OpenGL knows to use it
+  glEnableVertexAttribArray(0);
 
-	// Bind both the VBO and VAO to 0 so that we don't accidentally modify the VAO and VBO
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+  // Bind both the VBO and VAO to 0 so that we don't accidentally modify the VAO and VBO
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
 
   // Register this buffer object with CUDA
   cudaGraphicsGLRegisterBuffer(&cudaVBOResource, VBO, cudaGraphicsMapFlagsWriteDiscard);
 
-	// Specify the color of the background
-	glClearColor(0.02f, 0.02f, 0.02f, 1.0f);
-	// Clean the back buffer and assing the new color to it
-	glClear(GL_COLOR_BUFFER_BIT);
-	// Swap the back buffer with the front buffer
-	glfwSwapBuffers(glfwWindow);
+  // Specify the color of the background
+  glClearColor(0.02f, 0.02f, 0.02f, 1.0f);
+  // Clean the back buffer and assing the new color to it
+  glClear(GL_COLOR_BUFFER_BIT);
+  // Swap the back buffer with the front buffer
+  glfwSwapBuffers(glfwWindow);
 
 
   std::cout << "Opening GLFW window" << std::endl;
@@ -188,12 +203,12 @@ int main()
 
     // Using GLFW to check and process input events internally
     glfwPollEvents();
-	
-		glClear(GL_COLOR_BUFFER_BIT);
 
-		// Draw the triangle using the GL_POINTS primitive
-		glDrawArrays(GL_POINTS, 0, meshWidth);
-		glfwSwapBuffers(glfwWindow);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // Draw the triangle using the GL_POINTS primitive
+    glDrawArrays(GL_POINTS, 0, meshWidth);
+    glfwSwapBuffers(glfwWindow);
 
     // Update animation
     animTime += 0.04f;
